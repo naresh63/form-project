@@ -1,7 +1,32 @@
-import React, { useMemo } from 'react';
+import React, { useMemo,useState,useEffect } from 'react';
 import MaterialReactTable from 'material-react-table';
+import axios from 'axios';
 
 function TablePage() {
+    const [role, setRole] = useState('100');
+    const [datalist,setDatalist] = useState([]);
+
+    let payload = {
+      role_id:100,
+  };
+
+    useEffect(()=>{
+     axios({
+      method: 'post',
+      url:'https://4h6l2eo40d.execute-api.us-west-2.amazonaws.com/prod/roleid' ,
+      headers: {
+        // mode:'cors',
+        "Content-Type":'application/json'
+      }, 
+      data: payload,
+    })
+       .then((result)=>{
+        console.log(result)
+     })
+     .catch(err=>console.log(err))
+
+    },[]);
+
 
     const data= [
         {
@@ -18,20 +43,20 @@ function TablePage() {
             expected_level: 200,
             self_assessment: 0,
         },
-        {
-            capability: 'value7',
-            subcapability:'value8',
-            service:'value9',
-            expected_level: 100,
-            self_assessment: 0,
-        },
-        {
-            capability: 'value1',
-            subcapability:'value2',
-            service:'value3',
-            expected_level: 100,
-            self_assessment: 0,
-        },
+        // {
+        //     capability: 'value7',
+        //     subcapability:'value8',
+        //     service:'value9',
+        //     expected_level: 100,
+        //     self_assessment: 0,
+        // },
+        // {
+        //     capability: 'value1',
+        //     subcapability:'value2',
+        //     service:'value3',
+        //     expected_level: 100,
+        //     self_assessment: 0,
+        // },
     ]
 
     const columns = useMemo(
@@ -72,6 +97,12 @@ function TablePage() {
 
   return (
     <div>
+      <div>
+           <select  style={{width:'100px'}}>
+               <option value='100'> 100</option>
+               <option value='200'> 200</option>
+           </select>
+      </div>
    <MaterialReactTable columns={columns} data={data} /> 
 
 
