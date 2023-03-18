@@ -7,7 +7,7 @@ function App() {
   return (
     <div className="App">
      
-       <FormPage/>
+       {/* <FormPage/> */}
        <TablePage/>         
 
     </div>

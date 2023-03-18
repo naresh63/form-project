@@ -1,8 +1,11 @@
 import React, { useMemo,useState,useEffect } from 'react';
 import MaterialReactTable from 'material-react-table';
 import axios from 'axios';
+import {Select, MenuItem,FormControl, InputLabel }  from '@mui/material';
 
 function TablePage() {
+  const [datalist, setDatalist] = useState([]);
+  const [roleSelect, setRoleSlect] = useState(100)
        // Naresh ye following payloads ke sath try karna
  //   let payload = {
  //     role_id:100
@@ -12,7 +15,9 @@ function TablePage() {
  //     role_id:200
  // };
     let payload = {
-      role_id:100,skill_id:100
+      // role_id:100,
+      role_id: roleSelect,
+      // skill_id:100
   };
     useEffect(()=>{
      axios({
@@ -29,26 +34,37 @@ function TablePage() {
     })
        .then((result)=>{
         console.log(result)
+        console.log('data arr;',result.data.body)
+        setDatalist(result?.data?.body)
      })
      .catch(err=>console.log(err))
 
-    },[]);
+    },[roleSelect]);
 
-    const data= [
-        {
-            capability: 'value1',
-            subcapability:'value2',
-            service:'value3',
-            expected_level: 100,
-            self_assessment: 0,
-        },
-        {
-            capability: 'value4',
-            subcapability:'value5',
-            service:'value6',
-            expected_level: 200,
-            self_assessment: 0,
-        },
+     const data1 = datalist?.map((el,ind)=>({
+      capability:el.capability,
+      sub_capability: el.sub_capability,
+      related_service: el.related_service,
+      expected_level: el.expected_level,
+      skill_id: el.skill_id,
+      
+     }))
+
+    // const data= [
+    //     {
+    //         capability: 'value1',
+    //         subcapability:'value2',
+    //         service:'value3',
+    //         expected_level: 100,
+    //         self_assessment: 0,
+    //     },
+    //     {
+    //         capability: 'value4',
+    //         subcapability:'value5',
+    //         service:'value6',
+    //         expected_level: 200,
+    //         self_assessment: 0,
+    //     },
         // {
         //     capability: 'value7',
         //     subcapability:'value8',
@@ -63,9 +79,9 @@ function TablePage() {
         //     expected_level: 100,
         //     self_assessment: 0,
         // },
-    ]
+    // ]
 
-    const columns = useMemo(
+    const columns = useMemo(  
         () => [
           {
             accessorKey: 'capability', //simple recommended way to define a column
@@ -74,13 +90,13 @@ function TablePage() {
             Cell: ({ cell }) => <span>{cell.getValue()}</span>, //optional custom cell render
           },
           {
-            accessorKey: 'subcapability', //simple recommended way to define a column
+            accessorKey: 'sub_capability', //simple recommended way to define a column
             header: 'SubCapability',
             muiTableHeadCellProps: { sx: { color: 'white' , background:'green'} }, //optional custom props
             Cell: ({ cell }) => <span>{cell.getValue()}</span>, //optional custom cell render
           },
           {
-            accessorKey: 'service', //simple recommended way to define a column
+            accessorKey: 'related_service', //simple recommended way to define a column
             header: 'Service',
             muiTableHeadCellProps: { sx: { color: 'white' , background:'green'} }, //optional custom props
             Cell: ({ cell }) => <span>{cell.getValue()}</span>, //optional custom cell render
@@ -92,7 +108,7 @@ function TablePage() {
             Cell: ({ cell }) => <span>{cell.getValue()}</span>, //optional custom cell render
           },
           {
-            accessorKey: 'self_assessment', //simple recommended way to define a column
+            accessorKey: 'skill_id', //simple recommended way to define a column
             header: 'Self Assessment',
             muiTableHeadCellProps: { sx: { color: 'white' , background:'green'} }, //optional custom props
             Cell: ({ cell }) => <span>{cell.getValue()}</span>, //optional custom cell render
@@ -104,12 +120,24 @@ function TablePage() {
   return (
     <div>
       <div>
-           <select  style={{width:'100px'}}>
-               <option value='100'> 100</option>
-               <option value='200'> 200</option>
-           </select>
+      <FormControl>
+      <InputLabel id="demo-multiple-checkbox-label">Select Roll id</InputLabel>
+      <Select sx={{width:300}} 
+        onChange={(e)=>setRoleSlect(e.target.value)} 
+        placeholder="Roll"
+        >
+        <MenuItem value={100}>100</MenuItem>
+          <MenuItem value={200}>200</MenuItem>
+        </Select>
+
+      </FormControl>
+
+           {/* <select  style={{width:'100px'}} onChange={(e)=>setRoleSlect(e.target.value)} >
+               <option value={100}> 100</option>
+               <option value={200}> 200</option>
+           </select> */}
       </div>
-   <MaterialReactTable columns={columns} data={data} /> 
+   <MaterialReactTable columns={columns} data={data1} /> 
 
 
 
