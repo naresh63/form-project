@@ -3,21 +3,28 @@ import MaterialReactTable from 'material-react-table';
 import axios from 'axios';
 
 function TablePage() {
-    const [role, setRole] = useState('100');
-    const [datalist,setDatalist] = useState([]);
+       // Naresh ye following payloads ke sath try karna
+ //   let payload = {
+ //     role_id:100
+//  };
 
+ //   let payload = {
+ //     role_id:200
+ // };
     let payload = {
-      role_id:100,
+      role_id:100,skill_id:100
   };
-
     useEffect(()=>{
      axios({
       method: 'post',
-      url:'https://4h6l2eo40d.execute-api.us-west-2.amazonaws.com/prod/roleid' ,
+      url:'https://4h6l2eo40d.execute-api.us-west-2.amazonaws.com/roleid_stage/roleid' ,
+      //url:'https://4h6l2eo40d.execute-api.us-west-2.amazonaws.com/prod/roleid' ,
+//        url:'https://2u3jivvc14.execute-api.us-east-1.amazonaws.com/v1/hello',
+      //url:'https://pzlt68tg6d.execute-api.us-west-2.amazonaws.com/prod/example',
       headers: {
         // mode:'cors',
         "Content-Type":'application/json'
-      }, 
+      },
       data: payload,
     })
        .then((result)=>{
@@ -26,7 +33,6 @@ function TablePage() {
      .catch(err=>console.log(err))
 
     },[]);
-
 
     const data= [
         {
