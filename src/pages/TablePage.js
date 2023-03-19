@@ -132,11 +132,6 @@ function TablePage() {
         </Select>
 
       </FormControl>
-
-           {/* <select  style={{width:'100px'}} onChange={(e)=>setRoleSlect(e.target.value)} >
-               <option value={100}> 100</option>
-               <option value={200}> 200</option>
-           </select> */}
       </div>
    <MaterialReactTable columns={columns} data={data1} /> 
 
