@@ -125,6 +125,7 @@ function TablePage() {
       <Select sx={{width:300}} 
         onChange={(e)=>setRoleSlect(e.target.value)} 
         placeholder="Roll"
+        size="small"
         >
         <MenuItem value={100}>100</MenuItem>
           <MenuItem value={200}>200</MenuItem>
