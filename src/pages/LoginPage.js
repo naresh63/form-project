@@ -10,12 +10,18 @@ function LoginPage() {
   const loginHandle = (e) => {
     // e.preventDefault();
     let obj = {
-      user_id: username,
-      skill_id: Number(skillId),
+    operation: `query`,
+      payload:{
+        user_id: username,
+        skill_id: Number(skillId),
+      }
+
     };
     console.log('//obj',obj)
 
-    axios.post('https://vjie85klnd.execute-api.us-west-2.amazonaws.com/user_skill_stage/user_data_api_lambda',obj)
+    axios.post('https://vjie85klnd.execute-api.us-west-2.amazonaws.com/user_skill_stage/user_data_api_lambda',
+    JSON.stringify(obj)
+    )
     .then((res)=> {
       console.log(res);
     })
