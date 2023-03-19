@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { FormControl, InputLabel, TextField, Button } from "@mui/material";
 import { Box } from "@mui/system";
-import axios from 'axios';
+import axios from 'axios'; 
+import {useNavigate} from 'react-router-dom';
+import {storeData} from '../utils/localStorage';
 
 function LoginPage() {
   const [username, setUsername] = useState("");
   const [skillId, setSkillID] = useState();
+
+  const navigate = useNavigate();
 
   const loginHandle = (e) => {
     // e.preventDefault();
@@ -13,9 +17,7 @@ function LoginPage() {
     operation: `query`,
       payload:{
         user_id: username,
-        skill_id: Number(skillId),
       }
-
     };
     console.log('//obj',obj)
 
@@ -23,10 +25,11 @@ function LoginPage() {
     JSON.stringify(obj)
     )
     .then((res)=> {
-      console.log(res);
+      console.log('login api',res);
+      storeData('userid', username);
+      navigate('/userreport',{state:res.data[0]});
     })
     .catch(err=>console.log(err))
-
 
   };
   return (
@@ -55,7 +58,7 @@ function LoginPage() {
           {/* <div>
           <TextField name="password" placeholder="Enter Password" size="small" sx={{my:1,width:'100%'}} />
         </div> */}
-          <div>
+          {/* <div>
             <TextField
             type='number'
               onChange={(e) => setSkillID(e.target.value)}
@@ -65,7 +68,7 @@ function LoginPage() {
               size="small"
               sx={{ my: 1, width: "100%" }}
             />
-          </div>
+          </div> */}
           <div>
             <Button
               variant="contained"
